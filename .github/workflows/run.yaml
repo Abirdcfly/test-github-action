@@ -11,8 +11,6 @@ jobs:
       - name: pre
         run: |
           echo "ids=$(awk 'BEGIN {for (i=1;i<=100;i++) print i}')" >>$GITHUB_ENV
-          export "ids=$(awk 'BEGIN {for (i=1;i<=100;i++) print i}')"
-          echo "toJSON($ids)"
 
   test:
     needs:

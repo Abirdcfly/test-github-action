@@ -1,0 +1,17 @@
+name: "test github action"
+
+on:
+  workflow_dispatch:
+  push:
+
+jobs:
+  suite: 
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+    - name: Run script
+      run: scripts/run.sh
+    - name: Run script
+      if: ${{ env.UPLOAD_IMAGE == 'YES' }}
+      run: echo "2333"

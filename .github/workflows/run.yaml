@@ -15,7 +15,7 @@ jobs:
           string=${string//,/ }
           string="[$string]"
           echo "ids=${string}" >>$GITHUB_ENV
-          echo ${{ toJSON( env.ids ) }}
+#          echo ${{ toJSON( env.ids ) }}
 
   test:
     needs:

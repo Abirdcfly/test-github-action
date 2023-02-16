@@ -12,6 +12,7 @@ jobs:
       output_id1: ${{ steps.pre.outputs.test }}
     steps:
       - name: pre
+        id: pre
         run: |
           abcd=({1..1000})
           string=$(IFS=,; echo "${abcd[*]}") 

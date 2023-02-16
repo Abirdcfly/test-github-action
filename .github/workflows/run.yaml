@@ -28,7 +28,7 @@ jobs:
     strategy:
       fail-fast: true
       matrix:
-        no: ${{ needs.pre.outputs.output_id }}
+        no: ${{ toJSON(needs.pre.outputs.output_id) }}
     runs-on: ubuntu-latest
     env:
       OUTPUT1: ${{needs.pre.outputs.output_id}}

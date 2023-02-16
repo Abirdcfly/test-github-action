@@ -20,7 +20,7 @@ jobs:
     strategy:
       fail-fast: true
       matrix:
-        no: ${{ pre.env.ids }}
+        no: ${{ needs.pre.env.ids }}
     runs-on: ubuntu-latest
     steps:
     - name: Checkout code

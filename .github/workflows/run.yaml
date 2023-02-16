@@ -14,7 +14,7 @@ jobs:
           string=$(IFS=,; echo "${abcd[*]}") 
           #string=${string//,/ }
           string="[$string]"
-          echo "ids=${string}" >>$GITHUB_ENV
+          echo "ids=${string}" >>$GITHUB_OUTPUT
 #          echo ${{ toJSON( env.ids ) }}
 
   test:
@@ -23,7 +23,7 @@ jobs:
     strategy:
       fail-fast: true
       matrix:
-        no: ${{ needs.pre.env.ids }}
+        no: ${{ needs.pre.outputs.ids }}
     runs-on: ubuntu-latest
     steps:
     - name: Checkout code

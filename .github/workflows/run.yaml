@@ -14,7 +14,7 @@ jobs:
       - name: pre
         id: pre
         run: |
-          abcd=({1..1000})
+          abcd=({1..256})
           string=$(IFS=,; echo "${abcd[*]}") 
           #string=${string//,/ }
           string="[$string]"

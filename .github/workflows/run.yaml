@@ -22,12 +22,14 @@ jobs:
   test:
     needs:
       - pre
-    strategy:
-      fail-fast: true
-      matrix:
-        no: ${{ needs.pre.outputs.output_id }}
+#    strategy:
+#      fail-fast: true
+#      matrix:
+#        no: ${{ needs.pre.outputs.output_id }}
     runs-on: ubuntu-latest
     steps:
+    - name: abc
+      run: echo "${{ needs.pre.outputs.output_id }}"
     - name: Checkout code
       uses: actions/checkout@v3
     - name: Run script

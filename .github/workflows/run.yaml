@@ -29,11 +29,14 @@ jobs:
 #      matrix:
 #        no: ${{ needs.pre.outputs.output_id }}
     runs-on: ubuntu-latest
+    env:
+      OUTPUT1: ${{needs.pre.outputs.output_id}}
+      OUTPUT2: ${{needs.pre.outputs.output_id1}}
     steps:
     - name: abc
       run: |
-        echo "${{ needs.pre.outputs.output_id }}"
-        echo "${{ needs.pre.outputs.output_id1 }}"
+        echo "${{ env.OUTPUT1 }}"
+        echo "${{ env.OUTPUT2 }}"
     - name: Checkout code
       uses: actions/checkout@v3
     - name: Run script

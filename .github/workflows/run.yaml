@@ -12,7 +12,7 @@ jobs:
         run: |
           abcd=({1..1000})
           string=$(IFS=,; echo "${abcd[*]}") 
-          string=${string//,/ }
+          #string=${string//,/ }
           string="[$string]"
           echo "ids=${string}" >>$GITHUB_ENV
 #          echo ${{ toJSON( env.ids ) }}

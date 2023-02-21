@@ -5,43 +5,45 @@ on:
   push:
 
 jobs:
-  pre:
-    runs-on: ubuntu-latest
-    outputs:
-      output_id: ${{ steps.pre.outputs.ids }}
-      output_id1: ${{ steps.pre.outputs.test }}
-    steps:
-      - name: pre
-        id: pre
-        run: |
-          abcd=({1..256})
-          string=$(IFS=,; echo "${abcd[*]}") 
-          #string=${string//,/ }
-          string="[$string]"
-          echo "ids=${string}" >>"$GITHUB_OUTPUT"
-          echo "test=world" >> "$GITHUB_OUTPUT"
-#          echo ${{ toJSON( env.ids ) }}
+#  pre:
+#    runs-on: ubuntu-latest
+#    outputs:
+#      output_id: ${{ steps.pre.outputs.ids }}
+#      output_id1: ${{ steps.pre.outputs.test }}
+#    steps:
+#      - name: pre
+#        id: pre
+#        run: |
+#          abcd=({1..256})
+#          string=$(IFS=,; echo "${abcd[*]}")
+#          #string=${string//,/ }
+#          string="[$string]"
+#          echo "ids=${string}" >>"$GITHUB_OUTPUT"
+#          echo "test=world" >> "$GITHUB_OUTPUT"
+##          echo ${{ toJSON( env.ids ) }}
 
   test:
-    needs:
-      - pre
-    strategy:
-      fail-fast: true
-      matrix:
-        no: ${{ fromJSON(needs.pre.outputs.output_id) }}
+#    needs:
+#      - pre
+#    strategy:
+#      fail-fast: true
+#      matrix:
+#        no: ${{ fromJSON(needs.pre.outputs.output_id) }}
     runs-on: ubuntu-latest
-    env:
-      OUTPUT1: ${{needs.pre.outputs.output_id}}
-      OUTPUT2: ${{needs.pre.outputs.output_id1}}
+#    env:
+#      OUTPUT1: ${{needs.pre.outputs.output_id}}
+#      OUTPUT2: ${{needs.pre.outputs.output_id1}}
     steps:
-    - name: abc
-      run: |
-        echo "${{ env.OUTPUT1 }}"
-        echo "${{ env.OUTPUT2 }}"
+#    - name: abc
+#      run: |
+#        echo "${{ env.OUTPUT1 }}"
+#        echo "${{ env.OUTPUT2 }}"
     - name: Checkout code
       uses: actions/checkout@v3
+    - name: Login to the dockerhub Registry
+      uses: docker/login-action@v2
+      with:
+        username: hyperledgerk8s
+        password: ${{ secrets.DOCKER_TOKEN }}
     - name: Run script
-      run: scripts/run.sh
-    - name: Run script
-      if: ${{ env.UPLOAD_IMAGE == 'YES' }}
-      run: echo "2333"
+      run: bash -x scripts/run.sh

@@ -1,10 +1,10 @@
 #!/usr/bin/env bash
 IMAGES=(
-ubuntu:22.04
+gcr.io/kaniko-project/executor:v1.9.1
 )
 
 NEW_IMAGES=(
-hyperledgerk8s/ubuntu:22.04
+hyperledgerk8s/kaniko-executor:v1.9.1
 )
 
 for ((i=0;i<${#IMAGES[@]};++i)); do

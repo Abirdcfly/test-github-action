@@ -1,10 +1,10 @@
 #!/usr/bin/env bash
 IMAGES=(
-mcr.microsoft.com/powershell:nanoserver@sha256:b6d5ff841b78bdf2dfed7550000fd4f3437385b8fa686ec0f010be24777654d6
+mcr.microsoft.com/powershell:nanoserver-1809@sha256:a3c7e83f8018352a6284cefdf5066602bff9b298edf3cd51085c74a19cfafffc
 )
 
 NEW_IMAGES=(
-hyperledgerk8s/tekton-pipeline-args-powershell:nanoserver-b6d5ff
+hyperledgerk8s/tekton-pipeline-args-powershell:nanoserver-1809
 )
 
 for ((i=0;i<${#IMAGES[@]};++i)); do

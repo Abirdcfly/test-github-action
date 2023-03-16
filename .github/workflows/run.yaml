@@ -61,9 +61,7 @@ jobs:
       run: |
         source scripts/cache-image.sh
         save_all_images /tmp/images/ /tmp/all.image.list
-        ls -ltrha /tmp/
-        ls -ltrha /tmp/images/
-        ls -ltrha .
+        sudo chown -R root:docker /tmp/images/*
         echo "upload_image=${UPLOAD_IMAGE}" >> $GITHUB_OUTPUT
     - name: Upload cache images
       if: steps.cache-image.outputs.upload_image == 'YES'

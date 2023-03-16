@@ -38,9 +38,9 @@ function save_all_images() {
 		for image in ${IMAGES[@]}; do
 			n=$((n + 1))
 			for dockerContainerName in ${dockerContainerNames[@]}; do
-				save=$(docker exec -i ${dockerContainerName} ctr --namespace=k8s.io images export --skip-manifest-json --skip-non-distributable ${outputDir}/${n}.tar ${image}) && out=0 || out=1
-				echo $image $save $out
-				if [[ $out -eq 0 ]]; then
+				docker exec -i ${dockerContainerName} ctr --namespace=k8s.io images export --skip-manifest-json --skip-non-distributable ${outputDir}/${n}.tar ${image}) || exit_status=$?
+				echo $image $exit_status $dockerContainerName
+				if [[ $exit_status -eq 0 ]]; then
 					break
 				fi
 			done

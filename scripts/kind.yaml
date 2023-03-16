@@ -26,4 +26,7 @@ nodes:
     extraMounts:
     - hostPath: /tmp/images/
       containerPath: /tmp/images/
-
+containerdConfigPatches:
+  - |-
+    [plugins."io.containerd.grpc.v1.cri".containerd]
+      discard_unpacked_layers = false

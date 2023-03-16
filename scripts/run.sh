@@ -32,13 +32,15 @@ function save_all_images() {
 	else
 		echo "try to save all cluster images to $outputDir, images list to $imageListFile..."
 		echo $IMAGES >$imageListFile
+		IMAGES+=('foo')
 		dockerContainerNames=$(kubectl get node --no-headers=true | awk '{print $1}')
 		n=0
 		for image in ${IMAGES[@]}; do
 			n=$((n + 1))
 			for dockerContainerName in ${dockerContainerNames[@]}; do
-				docker exec -i ${dockerContainerName} ctr --namespace=k8s.io images export --skip-manifest-json --skip-non-distributable ${outputDir}/${n}.tar ${image}
-				if [[ $? -eq 0 ]]; then
+				save=$(docker exec -i ${dockerContainerName} ctr --namespace=k8s.io images export --skip-manifest-json --skip-non-distributable ${outputDir}/${n}.tar ${image}) && out=0 || out=1
+				echo $image $save $out
+				if [[ $out -eq 0 ]]; then
 					break
 				fi
 			done
@@ -53,6 +55,10 @@ function load_all_images() {
 	kindName=$1
 	inputDir=$2
 	if [ ! -d $inputDir ]; then
+		echo "no image dir found $inputDir, skip"
+		exit 0
+	fi
+	if [ ! -n "$(ls $inputDir)" ]; then
 		echo "no image found in $inputDir, skip"
 		exit 0
 	fi

@@ -14,4 +14,6 @@
 #done
 
 kind create cluster --config=scripts/kind.yaml --image kindest/node:v1.24.4
-ls -ltrha .
+git clone https://github.com/bestchains/installer.git /tmp/installer
+cd /tmp/installer
+. ./scripts/e2e.sh --minio

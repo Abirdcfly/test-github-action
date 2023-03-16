@@ -13,7 +13,7 @@
 #  docker push ${NEW_IMAGES[$i]} || true
 #done
 
-kind create cluster --config=kind.yaml --image kindest/node:v1.24.4
+kind create cluster --config=scripts/kind.yaml --image kindest/node:v1.24.4
 
 export UPLOAD_IMAGE=NO
 function save_all_images() {

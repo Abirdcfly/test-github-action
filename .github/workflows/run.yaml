@@ -63,7 +63,7 @@ jobs:
         save_all_images /tmp/images/ /tmp/all.image.list
         ls -ltrha /tmp/
         ls -ltrha /tmp/images/
-        ls -ltrha /workspaces/test-githu-action
+        ls -ltrha .
         echo "upload_image=${UPLOAD_IMAGE}" >> $GITHUB_OUTPUT
     - name: Upload cache images
       if: steps.cache-image.outputs.upload_image == 'YES'

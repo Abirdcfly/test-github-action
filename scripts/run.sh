@@ -35,13 +35,13 @@ function save_all_images() {
 		dockerContainerNames=$(kubectl get node --no-headers=true | awk '{print $1}')
 		n=0
 		for image in ${IMAGES[@]}; do
-		  n=$((n+1))
-		  for dockerContainerName in ${dockerContainerNames[@]}; do
-		    docker exec -i ${dockerContainerName} ctr --namespace=k8s.io images export --skip-manifest-json --skip-non-distributable ${outputDir}/${n}.tar ${image}
-		    if [[ $? -eq 0 ]];then
-		      break
-		    fi
-		  done
+			n=$((n + 1))
+			for dockerContainerName in ${dockerContainerNames[@]}; do
+				docker exec -i ${dockerContainerName} ctr --namespace=k8s.io images export --skip-manifest-json --skip-non-distributable ${outputDir}/${n}.tar ${image}
+				if [[ $? -eq 0 ]]; then
+					break
+				fi
+			done
 		done
 		UPLOAD_IMAGE=YES
 		echo "save all images done.✅"
@@ -52,20 +52,18 @@ function save_all_images() {
 function load_all_images() {
 	kindName=$1
 	inputDir=$2
-	if [ ! -f $inputDir ]; then
+	if [ ! -d $inputDir ]; then
 		echo "no image found in $inputDir, skip"
 		exit 0
 	fi
 	echo "try to load all cluster images from $outputDir to kind cluster $kindName..."
 	dockerContainerNames=$(docker ps -a --filter label=io.x-k8s.kind.cluster=${kindName} --format {{.Names}})
-  		n=0
-  		  n=$((n+1))
-  for dockerContainerName in ${dockerContainerNames[@]}; do
-    for imagefile in "$inputDir"/*; do
-  		  docker exec -i ${dockerContainerName} ctr --namespace=k8s.io images import ${imagefile}
-  	done
-	  echo "load all images for ${dockerContainerName} done."
-  done
+	for dockerContainerName in ${dockerContainerNames[@]}; do
+		for imagefile in "$inputDir"/*; do
+			docker exec -i ${dockerContainerName} ctr --namespace=k8s.io images import ${imagefile}
+		done
+		echo "load all images for ${dockerContainerName} done."
+	done
 	echo "load all images done.✅"
 }
 

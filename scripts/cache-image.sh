@@ -24,7 +24,7 @@ function save_all_images() {
 		echo "" >$imageListFile
 	fi
 	echo "get all images list..."
-	IMAGES=$(kubectl get po -A -o yaml | grep "image: " | awk -F ": " '{print $2}' | sort -u)
+	IMAGES=$(kubectl get po -A -o yaml | grep "image: " | awk -F ": " '{print $2}' | sort -u | grep -v "k8s.gcr.io")
 	echo "compare all images list with $imageListFile"
 	same=0
 	echo $IMAGES | diff - $imageListFile -y -q && same=0 || same=1
@@ -47,7 +47,7 @@ function save_all_images() {
 				if [[ $exit_status -eq 0 ]]; then
 				  echo "load $image from dockerContainerName"
 					break
-				elif [ $exit_status -eq 1 ]; then
+				else
 					echo "$dockerContainerName has no image $image"
 				fi
 			done
@@ -74,7 +74,7 @@ function load_all_images() {
 	for dockerContainerName in ${dockerContainerNames[@]}; do
 		for imagefile in "$inputDir"/*; do
 			docker exec --privileged -i ${dockerContainerName} ctr --namespace=k8s.io images import ${imagefile} || exit_status=$?
-			if [[ $exit_status -eq 0 ]]; then
+			if [[ $exit_exit_status -ne 0 ]]; then
 			  echo "$imagefile import not success, just skip it"
 			fi
 		done

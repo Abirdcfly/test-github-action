@@ -54,7 +54,13 @@ jobs:
         path: |
           /tmp/images/
           /tmp/all.image.list
-    - name: Run script
+    - name: Run script to make kind
+      run: bash -x scripts/kind.sh
+    - name: Load cache images to kind cluster
+      run: |
+        source scripts/cache-image.sh
+        load_all_images kind /tmp/images/
+    - name: Run script to make kind
       run: bash -x scripts/run.sh
     - name: Cache images
       id: cache-image

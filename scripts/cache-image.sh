@@ -37,12 +37,13 @@ function save_all_images() {
 		for dockerContainerName in ${dockerContainerNames[@]}; do
 			echo "$dockerContainerName image list:"
 			docker exec -i ${dockerContainerName} ctr --namespace=k8s.io images list
+			docker exec -i ${dockerContainerName} ctr version
 		done
 		n=0
 		for image in ${IMAGES[@]}; do
 			n=$((n + 1))
 			for dockerContainerName in ${dockerContainerNames[@]}; do
-				docker exec -i ${dockerContainerName} ctr --namespace=k8s.io images export ${outputDir}/${n}.tar.gz ${image} || exit_status=$?
+				docker exec -i ${dockerContainerName} ctr --namespace=k8s.io images export --platform=linux/amd64 ${outputDir}/${n}.tar.gz ${image} || exit_status=$?
 				if [[ $exit_status -eq 0 ]]; then
 					break
 				elif [ $exit_status -eq 1 ]; then

@@ -19,3 +19,4 @@
 #. ./scripts/e2e.sh --minio
 
 kubectl create deployment minio --image hyperledgerk8s/minio-minio:RELEASE.2023-02-10T18-48-39Z
+sleep 10

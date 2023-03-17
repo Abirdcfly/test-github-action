@@ -21,8 +21,7 @@ function save_all_images() {
 	outputDir=$1
 	imageListFile=$2
 	if [ ! -f $imageListFile ]; then
-	  mkdir -p $imageListFile
-		echo "" >$imageListFile
+	  mkdir -p "$(dirname "$imageListFile")" && touch "$imageListFile"
 	fi
 	echo "get all images list..."
 	IMAGES=$(kubectl get po -A -o yaml | grep "image: " | awk -F ": " '{print $2}' | sort -u | grep -v "k8s.gcr.io")

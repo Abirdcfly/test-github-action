@@ -21,6 +21,7 @@ function save_all_images() {
 	outputDir=$1
 	imageListFile=$2
 	if [ ! -f $imageListFile ]; then
+	  mkdir -p $imageListFile
 		echo "" >$imageListFile
 	fi
 	echo "get all images list..."

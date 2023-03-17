@@ -3,9 +3,6 @@ name: "test github action"
 on:
   workflow_dispatch:
   push:
-env:
-  IMAGE_DIR: ${{ env.GITHUB_WORKSPACE }}/tmp/images/
-  IMAGE_LIST: ${{ env.GITHUB_WORKSPACE }}/tmp/all.image.list
 
 jobs:
 #  pre:

@@ -57,8 +57,8 @@ jobs:
         key: install-image-${{ github.sha }}
         restore-keys: install-image-
         path: |
-          ${{ env.GITHUB_WORKSPACE }}/tmp/images/
-          ${{ env.GITHUB_WORKSPACE }}/tmp/all.image.list
+          ${GITHUB_WORKSPACE}/tmp/images/
+          ${GITHUB_WORKSPACE}/tmp/all.image.list
     - name: Run script to make kind
       run: bash -x scripts/kind.sh
     - name: Load cache images to kind cluster
@@ -80,8 +80,8 @@ jobs:
       with:
         key: install-image-${{ github.sha }}
         path: |
-          ${{ env.GITHUB_WORKSPACE }}/tmp/images/
-          ${{ env.GITHUB_WORKSPACE }}/tmp/all.image.list
+          ${GITHUB_WORKSPACE}/tmp/images/
+          ${GITHUB_WORKSPACE}/tmp/all.image.list
 #  pull-in-win:
 #    runs-on: windows-latest
 #    steps:

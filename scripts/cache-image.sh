@@ -49,7 +49,7 @@ function save_all_images() {
 			n=$((n + 1))
 			for dockerContainerName in ${dockerContainerNames[@]}; do
 				exit_status=0
-				docker exec -i ${dockerContainerName} ctr --namespace=k8s.io images export --platform=linux/amd64 ${outputDir}/${n}.tar.gz ${image} || exit_status=$?
+				docker exec -i ${dockerContainerName} ctr --namespace=k8s.io images export --platform=linux/amd64 /tmp/images/${n}.tar.gz ${image} || exit_status=$?
 				if [[ $exit_status -eq 0 ]]; then
 					echo "load $image from $dockerContainerName"
 					break
@@ -59,6 +59,7 @@ function save_all_images() {
 			done
 		done
 		UPLOAD_IMAGE=YES
+		cp -r /tmp/images/* ${outputDir}/
 		sudo chown -R runner:docker ${outputDir}/* || true
 		echo "save all images done.✅"
 	fi

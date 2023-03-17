@@ -3,6 +3,9 @@ name: "test github action"
 on:
   workflow_dispatch:
   push:
+env:
+  IMAGE_DIR: ${GITHUB_WORKSPACE}/tmp/images/
+  IMAGE_LIST: ${GITHUB_WORKSPACE}/tmp/all.image.list
 
 jobs:
 #  pre:
@@ -67,6 +70,7 @@ jobs:
     - name: Cache images
       id: cache-image
       run: |
+        echo ${IMAGE_DIR}
         source scripts/cache-image.sh
         save_all_images ${GITHUB_WORKSPACE}/tmp/images/ ${GITHUB_WORKSPACE}/tmp/all.image.list
         echo "upload_image=${UPLOAD_IMAGE}" >> $GITHUB_OUTPUT
@@ -76,8 +80,8 @@ jobs:
       with:
         key: install-image-${{ github.sha }}
         path: |
-          ${GITHUB_WORKSPACE}/tmp/images/
-          ${GITHUB_WORKSPACE}/tmp/all.image.list
+          ${{ GITHUB_WORKSPACE }}/tmp/images/
+          ${{ GITHUB_WORKSPACE }}/tmp/all.image.list
 #  pull-in-win:
 #    runs-on: windows-latest
 #    steps:

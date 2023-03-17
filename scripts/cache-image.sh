@@ -25,6 +25,7 @@ export UPLOAD_IMAGE=NO
 function save_all_images() {
 	outputDir=$1
 	imageListFile=$2
+	mkdir -p $outputDir
 	if [ ! -f $imageListFile ]; then
 	  mkdir -p "$(dirname "$imageListFile")" && touch "$imageListFile"
 	fi

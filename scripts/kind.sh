@@ -12,5 +12,5 @@
 #  docker tag ${IMAGES[$i]} ${NEW_IMAGES[$i]}
 #  docker push ${NEW_IMAGES[$i]} || true
 #done
-
+printenv
 kind create cluster --config=scripts/kind.yaml --image kindest/node:v1.24.4

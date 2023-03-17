@@ -43,9 +43,10 @@ function save_all_images() {
 		for image in ${IMAGES[@]}; do
 			n=$((n + 1))
 			for dockerContainerName in ${dockerContainerNames[@]}; do
+			  exit_status=0
 				docker exec -i ${dockerContainerName} ctr --namespace=k8s.io images export --platform=linux/amd64 ${outputDir}/${n}.tar.gz ${image} || exit_status=$?
 				if [[ $exit_status -eq 0 ]]; then
-				  echo "load $image from dockerContainerName"
+				  echo "load $image from $dockerContainerName"
 					break
 				else
 					echo "$dockerContainerName has no image $image"
@@ -74,7 +75,7 @@ function load_all_images() {
 	for dockerContainerName in ${dockerContainerNames[@]}; do
 		for imagefile in "$inputDir"/*; do
 			docker exec --privileged -i ${dockerContainerName} ctr --namespace=k8s.io images import ${imagefile} || exit_status=$?
-			if [[ $exit_exit_status -ne 0 ]]; then
+			if [[ $exit_status -ne 0 ]]; then
 			  echo "$imagefile import not success, just skip it"
 			fi
 		done

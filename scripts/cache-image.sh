@@ -16,6 +16,11 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
+if [[ $RUNNER_DEBUG -eq 1 ]] || [[ $GITHUB_RUN_ATTEMPT -gt 1 ]]; then
+  # use [debug logging](https://docs.github.com/en/actions/monitoring-and-troubleshooting-workflows/enabling-debug-logging)
+  # or run the same test multiple times.
+  set -x
+fi
 export UPLOAD_IMAGE=NO
 function save_all_images() {
 	outputDir=$1
@@ -33,6 +38,7 @@ function save_all_images() {
 	else
 		echo "try to save all cluster images to $outputDir, images list to $imageListFile..."
 		echo $IMAGES >$imageListFile
+		cat $imageListFile
 		dockerContainerNames=$(kubectl get node --no-headers=true | awk '{print $1}')
 		for dockerContainerName in ${dockerContainerNames[@]}; do
 			echo "$dockerContainerName image list:"

@@ -57,8 +57,8 @@ jobs:
         key: install-image-${{ github.sha }}
         restore-keys: install-image-
         path: |
-          ${GITHUB_WORKSPACE}/tmp/images/
-          ${GITHUB_WORKSPACE}/tmp/all.image.list
+          ${{ env.GITHUB_WORKSPACE }}/tmp/images/
+          ${{ env.GITHUB_WORKSPACE }}/tmp/all.image.list
     - name: Run script to make kind
       run: bash -x scripts/kind.sh
     - name: Load cache images to kind cluster
@@ -72,7 +72,7 @@ jobs:
       run: |
         echo ${IMAGE_DIR}
         source scripts/cache-image.sh
-        save_all_images ${GITHUB_WORKSPACE}/tmp/images/ ${GITHUB_WORKSPACE}/tmp/all.image.list
+        save_all_images ${{ env.GITHUB_WORKSPACE }}/tmp/images/ ${{ env.GITHUB_WORKSPACE }}/tmp/all.image.list
         echo "upload_image=${UPLOAD_IMAGE}" >> $GITHUB_OUTPUT
     - name: Upload cache images
       if: steps.cache-image.outputs.upload_image == 'YES'

@@ -16,7 +16,6 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
-set -x
 export UPLOAD_IMAGE=NO
 function save_all_images() {
 	outputDir=$1
@@ -29,7 +28,7 @@ function save_all_images() {
 	echo "compare all images list with $imageListFile"
 	same=0
 	echo $IMAGES | diff - $imageListFile -y -q && same=0 || same=1
-	if [[ $same -eq 1 ]]; then
+	if [[ $same -eq 0 ]]; then
 		echo "image list is same with cache, skip store. done.✅"
 	else
 		echo "try to save all cluster images to $outputDir, images list to $imageListFile..."

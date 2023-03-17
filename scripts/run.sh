@@ -12,15 +12,10 @@
 #  docker tag ${IMAGES[$i]} ${NEW_IMAGES[$i]}
 #  docker push ${NEW_IMAGES[$i]} || true
 #done
-printenv
 
-if [[ $RUNNER_DEBUG -eq 1 ]] || [[ $GITHUB_RUN_ATTEMPT -gt 1 ]]; then
-  # use https://docs.github.com/en/actions/monitoring-and-troubleshooting-workflows/enabling-debug-logging#enabling-step-debug-logging
-  # or run the same test multiple times.
-  echo "123"
-fi
-echo "234"
 
 #git clone https://github.com/bestchains/installer.git /tmp/installer
 #cd /tmp/installer
 #. ./scripts/e2e.sh --minio
+
+kubectl create deployment minio --image hyperledgerk8s/minio-minio:RELEASE.2023-02-10T18-48-39Z

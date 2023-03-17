@@ -40,45 +40,44 @@ jobs:
 #        echo "${{ env.OUTPUT2 }}"
     - name: Checkout code
       uses: actions/checkout@v3
-    - name: Run script to make kind
-      run: bash -x scripts/run.sh
+#    - name: Run script to make kind
+#      run: bash -x scripts/run.sh
 #    - name: Login to the dockerhub Registry
 #      uses: docker/login-action@v2
 #      with:
 #        username: hyperledgerk8s
 #        password: ${{ secrets.DOCKER_TOKEN }}
-#    - name: Load the image of the previous test from cache
-#      id: restore-cache
-#      uses: actions/cache/restore@v3
-#      with:
-#        key: install-image-${{ github.sha }}
-#        restore-keys: install-image-
-#        path: |
-#          /tmp/images/
-#          /tmp/all.image.list
-#    - name: Run script to make kind
-#      run: bash -x scripts/kind.sh
-#    - name: Load cache images to kind cluster
-#      run: |
-#        source scripts/cache-image.sh
-#        load_all_images kind /tmp/images/
-#    - name: Run script to make kind
-#      run: bash -x scripts/run.sh
-#    - name: Cache images
-#      id: cache-image
-#      run: |
-#        source scripts/cache-image.sh
-#        save_all_images /tmp/images/ /tmp/all.image.list
-#        sudo chown -R runner:docker /tmp/images/*
-#        echo "upload_image=${UPLOAD_IMAGE}" >> $GITHUB_OUTPUT
-#    - name: Upload cache images
-#      if: steps.cache-image.outputs.upload_image == 'YES'
-#      uses: actions/cache/save@v3
-#      with:
-#        key: install-image-${{ github.sha }}
-#        path: |
-#          /tmp/images/
-#          /tmp/all.image.list
+    - name: Load the image of the previous test from cache
+      id: restore-cache
+      uses: actions/cache/restore@v3
+      with:
+        key: install-image-${{ github.sha }}
+        restore-keys: install-image-
+        path: |
+          /tmp/images/
+          /tmp/all.image.list
+    - name: Run script to make kind
+      run: bash -x scripts/kind.sh
+    - name: Load cache images to kind cluster
+      run: |
+        source scripts/cache-image.sh
+        load_all_images kind /tmp/images/
+    - name: Run script to make kind
+      run: bash -x scripts/run.sh
+    - name: Cache images
+      id: cache-image
+      run: |
+        source scripts/cache-image.sh
+        save_all_images /tmp/images/ /tmp/all.image.list
+        echo "upload_image=${UPLOAD_IMAGE}" >> $GITHUB_OUTPUT
+    - name: Upload cache images
+      if: steps.cache-image.outputs.upload_image == 'YES'
+      uses: actions/cache/save@v3
+      with:
+        key: install-image-${{ github.sha }}
+        path: |
+          /tmp/images/
+          /tmp/all.image.list
 #  pull-in-win:
 #    runs-on: windows-latest
 #    steps:

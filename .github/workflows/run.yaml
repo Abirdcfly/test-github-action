@@ -66,8 +66,7 @@ jobs:
       run: bash -x scripts/run.sh
     - name: Cache images
       id: cache-image
-      run: |
-        echo ${IMAGE_DIR}
+      run: | 
         source scripts/cache-image.sh
         save_all_images ${GITHUB_WORKSPACE}/tmp/images/ ${GITHUB_WORKSPACE}/tmp/all.image.list
         echo "upload_image=${UPLOAD_IMAGE}" >> $GITHUB_OUTPUT

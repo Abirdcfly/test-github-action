@@ -54,8 +54,6 @@ function save_all_images() {
 				if [[ $exit_status -eq 0 ]]; then
 					echo "load $image from $dockerContainerName"
 					break
-				else
-					echo "$dockerContainerName has no image $image"
 				fi
 			done
 		done

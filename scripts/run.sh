@@ -12,7 +12,7 @@
 #  docker tag ${IMAGES[$i]} ${NEW_IMAGES[$i]}
 #  docker push ${NEW_IMAGES[$i]} || true
 #done
-
-git clone https://github.com/bestchains/installer.git /tmp/installer
-cd /tmp/installer
-. ./scripts/e2e.sh --minio
+printenv
+#git clone https://github.com/bestchains/installer.git /tmp/installer
+#cd /tmp/installer
+#. ./scripts/e2e.sh --minio
